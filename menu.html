@@ -159,13 +159,23 @@
             min-height: 1.2em;
         }
 
+        .typing-line {
+            display: inline-flex;
+            align-items: baseline;
+            justify-content: center;
+            flex-wrap: nowrap;
+            max-width: 100%;
+        }
+
         .typing-text {
-            display: inline-block;
+            display: inline;
         }
 
         .typing-caret {
             display: inline-block;
-            margin-left: 0.08em;
+            flex: 0 0 auto;
+            width: 1ch;
+            margin-left: 0.02em;
             animation: blinkCaret 0.8s step-end infinite;
         }
 
@@ -448,7 +458,9 @@
         <main class="main-content">
             <section class="hero-background-text" aria-label="Welcome message">
                 <h1 aria-live="polite">
-                    <span class="typing-text" id="typingText"></span><span class="typing-caret" aria-hidden="true">|</span>
+                    <span class="typing-line">
+                        <span class="typing-text" id="typingText"></span><span class="typing-caret" aria-hidden="true">|</span>
+                    </span>
                 </h1>
             </section>
         </main>
@@ -495,7 +507,6 @@
         const deletingSpeed = 100;
         const pauseAfterIntroTyping = 5000;
         const pauseAfterIntroDeleting = 1200;
-        const pauseAfterFinalTyping = 6000;
 
         function sleep(ms) {
             return new Promise((resolve) => setTimeout(resolve, ms));
@@ -524,7 +535,6 @@
             await deleteMessage(introMessage, deletingSpeed);
             await sleep(pauseAfterIntroDeleting);
             await typeMessage(finalMessage, typingSpeed);
-            await sleep(pauseAfterFinalTyping);
         }
 
         function openSidebar() {
