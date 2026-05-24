@@ -15,7 +15,6 @@
         :root {
             --page-bg: #ffffff;
             --text-main: #4f4f4f;
-            --text-hero-soft: rgba(70, 70, 70, 0.32);
             --text-hero: rgba(70, 70, 70, 0.78);
             --glass-bg: rgba(255, 255, 255, 0.22);
             --glass-border: rgba(255, 255, 255, 0.4);
@@ -23,14 +22,12 @@
             --menu-solid: rgba(255, 255, 255, 0.34);
             --overlay-bg: rgba(255, 255, 255, 0.14);
             --shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
-            --hero-shadow-soft: 0 8px 24px rgba(255, 255, 255, 0.08);
             --hero-shadow: 0 8px 28px rgba(255, 255, 255, 0.2);
         }
 
         body.dark-mode {
             --page-bg: #121212;
             --text-main: #e7e7e7;
-            --text-hero-soft: rgba(245, 245, 245, 0.28);
             --text-hero: rgba(245, 245, 245, 0.78);
             --glass-bg: rgba(255, 255, 255, 0.08);
             --glass-border: rgba(255, 255, 255, 0.12);
@@ -38,7 +35,6 @@
             --menu-solid: rgba(255, 255, 255, 0.1);
             --overlay-bg: rgba(0, 0, 0, 0.22);
             --shadow: 0 10px 34px rgba(0, 0, 0, 0.28);
-            --hero-shadow-soft: 0 8px 24px rgba(0, 0, 0, 0.08);
             --hero-shadow: 0 8px 28px rgba(0, 0, 0, 0.18);
         }
 
@@ -158,13 +154,9 @@
             line-height: 1.08;
             font-weight: 700;
             letter-spacing: -1.2px;
-            color: var(--text-hero-soft);
-            text-shadow: var(--hero-shadow-soft);
+            color: var(--text-hero);
+            text-shadow: var(--hero-shadow);
             min-height: 1.2em;
-            opacity: 0.45;
-            transform: translateY(10px);
-            animation: bringForwardHero 2s ease-out forwards;
-            animation-delay: 0.5s;
         }
 
         .sidebar-backdrop {
@@ -319,21 +311,6 @@
 
         body.dark-mode .sun-icon {
             display: inline-flex;
-        }
-
-        @keyframes bringForwardHero {
-            from {
-                opacity: 0.45;
-                transform: translateY(10px);
-                color: var(--text-hero-soft);
-                text-shadow: var(--hero-shadow-soft);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-                color: var(--text-hero);
-                text-shadow: var(--hero-shadow);
-            }
         }
 
         @media (max-width: 480px) {
