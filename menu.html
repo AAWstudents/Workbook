@@ -157,6 +157,17 @@
             letter-spacing: -1.2px;
             color: var(--text-hero);
             text-shadow: var(--hero-shadow);
+            min-height: 1.2em;
+        }
+
+        .typing-text {
+            display: inline-block;
+        }
+
+        .typing-caret {
+            display: inline-block;
+            margin-left: 0.08em;
+            animation: blinkCaret 0.8s step-end infinite;
         }
 
         .sidebar-backdrop {
@@ -324,6 +335,15 @@
             }
         }
 
+        @keyframes blinkCaret {
+            0%, 49% {
+                opacity: 1;
+            }
+            50%, 100% {
+                opacity: 0;
+            }
+        }
+
         @media (max-width: 480px) {
             .topbar {
                 top: 16px;
@@ -439,7 +459,9 @@
 
         <main class="main-content">
             <section class="hero-background-text" aria-label="Welcome message">
-                <h1>Welcome To The Acute Admissions Ward</h1>
+                <h1 aria-live="polite">
+                    <span class="typing-text" id="typingText"></span><span class="typing-caret" aria-hidden="true">|</span>
+                </h1>
             </section>
         </main>
 
@@ -474,7 +496,46 @@
         const menuToggle = document.getElementById('menuToggle');
         const closeSidebar = document.getElementById('closeSidebar');
         const themeToggle = document.getElementById('themeToggle');
+        const typingText = document.getElementById('typingText');
         const themeStorageKey = 'aawTheme';
+
+        const heroMessages = [
+            'Welcome To The Acute Admissions Ward',
+            'What Are We Doing Today?',
+            'Let’s Get Started'
+        ];
+
+        const typingSpeed = 85;
+        const deletingSpeed = 45;
+        const pauseAfterTyping = 1800;
+        const pauseAfterDeleting = 450;
+
+        function sleep(ms) {
+            return new Promise((resolve) => setTimeout(resolve, ms));
+        }
+
+        async function runTypingAnimation(messages) {
+            let messageIndex = 0;
+
+            while (true) {
+                const currentMessage = messages[messageIndex];
+
+                for (let i = 1; i <= currentMessage.length; i += 1) {
+                    typingText.textContent = currentMessage.slice(0, i);
+                    await sleep(typingSpeed);
+                }
+
+                await sleep(pauseAfterTyping);
+
+                for (let i = currentMessage.length; i >= 0; i -= 1) {
+                    typingText.textContent = currentMessage.slice(0, i);
+                    await sleep(deletingSpeed);
+                }
+
+                await sleep(pauseAfterDeleting);
+                messageIndex = (messageIndex + 1) % messages.length;
+            }
+        }
 
         function openSidebar() {
             sidebar.classList.add('open');
@@ -517,6 +578,7 @@
         });
 
         restoreTheme();
+        runTypingAnimation(heroMessages);
     </script>
 </body>
 </html>
