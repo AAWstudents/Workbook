@@ -487,52 +487,44 @@
         const typingText = document.getElementById('typingText');
         const themeStorageKey = 'aawTheme';
 
-        const heroMessages = [
-            'Welcome To The Acute Admissions Ward',
-            'What Are We Doing Today?',
-            'Let’s Get Started'
-        ];
+        const introMessage = 'Welcome To The Acute Admissions Ward';
+        const finalMessage = 'Let’s Get Started';
 
-        const initialCursorBlinkDelay = 1800;
-        const typingSpeed = 110;
-        const deletingSpeed = 60;
-        const pauseAfterTyping = 2600;
-        const pauseAfterDeleting = 800;
+        const initialCursorBlinkDelay = 2200;
+        const typingSpeed = 170;
+        const deletingSpeed = 100;
+        const pauseAfterIntroTyping = 5000;
+        const pauseAfterIntroDeleting = 1200;
+        const pauseAfterFinalTyping = 6000;
 
         function sleep(ms) {
             return new Promise((resolve) => setTimeout(resolve, ms));
         }
 
-        async function typeMessage(message) {
+        async function typeMessage(message, speed) {
             for (let i = 1; i <= message.length; i += 1) {
                 typingText.textContent = message.slice(0, i);
-                await sleep(typingSpeed);
+                await sleep(speed);
             }
         }
 
-        async function deleteMessage(message) {
+        async function deleteMessage(message, speed) {
             for (let i = message.length; i >= 0; i -= 1) {
                 typingText.textContent = message.slice(0, i);
-                await sleep(deletingSpeed);
+                await sleep(speed);
             }
         }
 
-        async function runTypingAnimation(messages) {
-            let messageIndex = 0;
-
+        async function runTypingAnimation() {
             typingText.textContent = '';
+
             await sleep(initialCursorBlinkDelay);
-
-            while (true) {
-                const currentMessage = messages[messageIndex];
-
-                await typeMessage(currentMessage);
-                await sleep(pauseAfterTyping);
-                await deleteMessage(currentMessage);
-                await sleep(pauseAfterDeleting);
-
-                messageIndex = (messageIndex + 1) % messages.length;
-            }
+            await typeMessage(introMessage, typingSpeed);
+            await sleep(pauseAfterIntroTyping);
+            await deleteMessage(introMessage, deletingSpeed);
+            await sleep(pauseAfterIntroDeleting);
+            await typeMessage(finalMessage, typingSpeed);
+            await sleep(pauseAfterFinalTyping);
         }
 
         function openSidebar() {
@@ -576,7 +568,7 @@
         });
 
         restoreTheme();
-        runTypingAnimation(heroMessages);
+        runTypingAnimation();
     </script>
 </body>
 </html>
