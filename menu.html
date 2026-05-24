@@ -15,15 +15,11 @@
 
         :root {
             --text-main: #666666;
-            --text-soft: #8a8a8a;
             --glass-bg: rgba(255, 255, 255, 0.2);
             --glass-border: rgba(255, 255, 255, 0.4);
             --glass-hover: rgba(255, 255, 255, 0.3);
-            --accent-a: rgba(100, 150, 255, 0.4);
-            --accent-b: rgba(150, 100, 255, 0.3);
-            --accent-a-strong: rgba(100, 150, 255, 0.5);
-            --accent-b-strong: rgba(150, 100, 255, 0.4);
             --shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+            --menu-solid: rgba(255, 255, 255, 0.32);
         }
 
         body {
@@ -172,23 +168,12 @@
             padding: 6px 6px 10px;
         }
 
-        .sidebar-title {
-            display: flex;
-            flex-direction: column;
-        }
-
         .sidebar-title h1 {
             font-size: 1.3rem;
             line-height: 1.1;
             font-weight: 700;
             color: var(--text-main);
             letter-spacing: -0.4px;
-        }
-
-        .sidebar-title p {
-            margin-top: 4px;
-            font-size: 0.85rem;
-            color: var(--text-soft);
         }
 
         .close-btn {
@@ -226,8 +211,9 @@
             padding: 14px 14px;
             border: 1px solid rgba(255, 255, 255, 0.35);
             border-radius: 14px;
-            background: linear-gradient(135deg, var(--accent-a), var(--accent-b));
+            background: var(--menu-solid);
             color: var(--text-main);
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
             font-family: inherit;
             font-size: 0.95rem;
             font-weight: 600;
@@ -235,19 +221,18 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            transition: all 0.3s ease;
             text-align: left;
+            transition: all 0.3s ease;
         }
 
         .menu-btn:hover {
-            background: linear-gradient(135deg, var(--accent-a-strong), var(--accent-b-strong));
-            box-shadow: 0 4px 15px rgba(100, 150, 255, 0.2);
+            background: var(--menu-solid);
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
             transform: translateY(-2px);
         }
 
-        .menu-btn.active {
-            background: rgba(255, 255, 255, 0.32);
-            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+        .menu-btn:active {
+            transform: translateY(0);
         }
 
         .menu-icon {
@@ -306,8 +291,7 @@
         <aside class="sidebar" id="sidebar" aria-hidden="true">
             <div class="sidebar-header">
                 <div class="sidebar-title">
-                    <h1>Induction</h1>
-                    <p>Navigation</p>
+                    <h1>Navigation</h1>
                 </div>
 
                 <button class="close-btn" id="closeSidebar" type="button" aria-label="Close menu">
@@ -319,7 +303,7 @@
             </div>
 
             <nav class="menu-list" aria-label="Sidebar menu">
-                <button class="menu-btn active" type="button">
+                <button class="menu-btn" type="button">
                     <span class="menu-icon" aria-hidden="true">
                         <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M3 10.5 12 3l9 7.5"></path>
