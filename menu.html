@@ -20,6 +20,7 @@
             --glass-hover: rgba(255, 255, 255, 0.3);
             --shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
             --menu-solid: rgba(255, 255, 255, 0.32);
+            --hero-text: rgba(102, 102, 102, 0.16);
         }
 
         body {
@@ -116,6 +117,29 @@
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
             box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-background-text {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            text-align: center;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        .hero-background-text h1 {
+            max-width: 900px;
+            font-size: clamp(2rem, 6vw, 4.8rem);
+            line-height: 1.1;
+            font-weight: 700;
+            letter-spacing: -1.2px;
+            color: var(--hero-text);
         }
 
         .sidebar-backdrop {
@@ -268,6 +292,10 @@
                 width: 280px;
                 padding: 16px 12px;
             }
+
+            .hero-background-text {
+                padding: 24px;
+            }
         }
     </style>
 </head>
@@ -337,7 +365,11 @@
         </aside>
 
         <main class="main-content">
-            <section class="empty-panel" aria-label="Main content area"></section>
+            <section class="empty-panel" aria-label="Main content area">
+                <div class="hero-background-text">
+                    <h1>Welcome To The AAW Workspace</h1>
+                </div>
+            </section>
         </main>
     </div>
 
