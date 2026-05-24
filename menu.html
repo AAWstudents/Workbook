@@ -16,14 +16,14 @@
         :root {
             --text-main: #666666;
             --text-soft: #8a8a8a;
-            --text-light: #b5b5b5;
             --glass-bg: rgba(255, 255, 255, 0.2);
             --glass-border: rgba(255, 255, 255, 0.4);
-            --glass-hover: rgba(255, 255, 255, 0.28);
+            --glass-hover: rgba(255, 255, 255, 0.3);
             --accent-a: rgba(100, 150, 255, 0.4);
             --accent-b: rgba(150, 100, 255, 0.3);
             --accent-a-strong: rgba(100, 150, 255, 0.5);
             --accent-b-strong: rgba(150, 100, 255, 0.4);
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
         }
 
         body {
@@ -46,84 +46,188 @@
         }
 
         .blur-1 {
-            width: 420px;
-            height: 420px;
+            width: 400px;
+            height: 400px;
             background: rgba(100, 150, 255, 0.2);
-            top: -140px;
+            top: -150px;
             left: -100px;
         }
 
         .blur-2 {
-            width: 360px;
-            height: 360px;
+            width: 350px;
+            height: 350px;
             background: rgba(150, 100, 255, 0.15);
-            bottom: -90px;
-            right: -60px;
+            bottom: -80px;
+            right: -50px;
         }
 
-        .page {
+        .app {
             position: relative;
             z-index: 10;
             width: 100%;
             min-height: 100vh;
-            padding: 24px;
         }
 
-        .layout {
+        .topbar {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 30;
+        }
+
+        .menu-toggle {
+            width: 52px;
+            height: 52px;
+            border: 1px solid var(--glass-border);
+            border-radius: 14px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            box-shadow: var(--shadow);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .menu-toggle:hover {
+            background: var(--glass-hover);
+            transform: translateY(-2px);
+        }
+
+        .menu-toggle svg {
+            width: 22px;
+            height: 22px;
+            stroke: var(--text-main);
+        }
+
+        .main-content {
+            width: 100%;
+            min-height: 100vh;
+            padding: 24px;
+            display: flex;
+            align-items: stretch;
+            justify-content: stretch;
+        }
+
+        .empty-panel {
             width: 100%;
             min-height: calc(100vh - 48px);
-            display: flex;
-            gap: 20px;
-        }
-
-        .glass-panel {
-            background: var(--glass-bg);
+            border-radius: 24px;
+            background: rgba(255, 255, 255, 0.14);
             border: 1px solid var(--glass-border);
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
-            border-radius: 24px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+            box-shadow: var(--shadow);
+        }
+
+        .sidebar-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 40;
         }
 
         .sidebar {
-            width: 280px;
-            padding: 24px 18px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 300px;
+            max-width: 85vw;
+            height: 100vh;
+            padding: 20px 16px;
+            background: rgba(255, 255, 255, 0.22);
+            border-right: 1px solid var(--glass-border);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            box-shadow: var(--shadow);
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+            z-index: 50;
             display: flex;
             flex-direction: column;
-            animation: slideUp 0.6s ease-out;
+            gap: 18px;
         }
 
-        .brand {
-            padding: 8px 10px 22px;
+        .sidebar.open {
+            transform: translateX(0);
         }
 
-        .brand h1 {
-            font-size: 1.5rem;
+        .sidebar-backdrop.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .sidebar-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 6px 6px 10px;
+        }
+
+        .sidebar-title {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-title h1 {
+            font-size: 1.3rem;
             line-height: 1.1;
             font-weight: 700;
             color: var(--text-main);
-            letter-spacing: -0.5px;
+            letter-spacing: -0.4px;
         }
 
-        .brand p {
-            margin-top: 8px;
-            font-size: 0.9rem;
+        .sidebar-title p {
+            margin-top: 4px;
+            font-size: 0.85rem;
             color: var(--text-soft);
         }
 
-        .menu {
+        .close-btn {
+            width: 42px;
+            height: 42px;
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.14);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .close-btn:hover {
+            background: rgba(255, 255, 255, 0.24);
+        }
+
+        .close-btn svg {
+            width: 18px;
+            height: 18px;
+            stroke: var(--text-main);
+        }
+
+        .menu-list {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 10px;
+            margin-top: 4px;
         }
 
         .menu-btn {
             width: 100%;
+            padding: 14px 14px;
             border: 1px solid rgba(255, 255, 255, 0.35);
+            border-radius: 14px;
             background: linear-gradient(135deg, var(--accent-a), var(--accent-b));
             color: var(--text-main);
-            border-radius: 14px;
-            padding: 14px 16px;
             font-family: inherit;
             font-size: 0.95rem;
             font-weight: 600;
@@ -132,17 +236,13 @@
             align-items: center;
             gap: 12px;
             transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
+            text-align: left;
         }
 
         .menu-btn:hover {
             background: linear-gradient(135deg, var(--accent-a-strong), var(--accent-b-strong));
             box-shadow: 0 4px 15px rgba(100, 150, 255, 0.2);
             transform: translateY(-2px);
-        }
-
-        .menu-btn:active {
-            transform: translateY(0);
         }
 
         .menu-btn.active {
@@ -165,72 +265,23 @@
             stroke: currentColor;
         }
 
-        .content {
-            flex: 1;
-            padding: 20px;
-            animation: slideUp 0.7s ease-out;
-        }
-
-        .empty-main {
-            width: 100%;
-            height: 100%;
-            min-height: calc(100vh - 88px);
-            border-radius: 20px;
-            border: 1px dashed rgba(255, 255, 255, 0.35);
-            background: rgba(255, 255, 255, 0.08);
-        }
-
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(24px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @media (max-width: 900px) {
-            body {
-                overflow: auto;
-            }
-
-            .layout {
-                flex-direction: column;
-                min-height: auto;
-            }
-
-            .sidebar {
-                width: 100%;
-            }
-
-            .content {
-                min-height: 420px;
-            }
-
-            .empty-main {
-                min-height: 420px;
-            }
-        }
-
         @media (max-width: 480px) {
-            .page {
+            .topbar {
+                top: 16px;
+                left: 16px;
+            }
+
+            .main-content {
                 padding: 16px;
             }
 
-            .sidebar,
-            .content {
-                padding: 18px;
+            .empty-panel {
+                min-height: calc(100vh - 32px);
             }
 
-            .brand h1 {
-                font-size: 1.3rem;
-            }
-
-            .menu-btn {
-                padding: 13px 14px;
-                font-size: 0.92rem;
+            .sidebar {
+                width: 280px;
+                padding: 16px 12px;
             }
         }
     </style>
@@ -239,52 +290,102 @@
     <div class="bg-blur blur-1"></div>
     <div class="bg-blur blur-2"></div>
 
-    <main class="page">
-        <section class="layout">
-            <aside class="sidebar glass-panel">
-                <div class="brand">
+    <div class="app">
+        <div class="topbar">
+            <button class="menu-toggle" id="menuToggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="sidebar">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round">
+                    <path d="M4 7h16"></path>
+                    <path d="M4 12h16"></path>
+                    <path d="M4 17h16"></path>
+                </svg>
+            </button>
+        </div>
+
+        <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+        <aside class="sidebar" id="sidebar" aria-hidden="true">
+            <div class="sidebar-header">
+                <div class="sidebar-title">
                     <h1>Induction</h1>
                     <p>Navigation</p>
                 </div>
 
-                <nav class="menu" aria-label="Sidebar menu">
-                    <button class="menu-btn active" type="button">
-                        <span class="menu-icon" aria-hidden="true">
-                            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M3 10.5 12 3l9 7.5"></path>
-                                <path d="M5 9.5V21h14V9.5"></path>
-                            </svg>
-                        </span>
-                        <span>Induction</span>
-                    </button>
+                <button class="close-btn" id="closeSidebar" type="button" aria-label="Close menu">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round">
+                        <path d="M6 6l12 12"></path>
+                        <path d="M18 6L6 18"></path>
+                    </svg>
+                </button>
+            </div>
 
-                    <button class="menu-btn" type="button">
-                        <span class="menu-icon" aria-hidden="true">
-                            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M6 3h9l3 3v15H6z"></path>
-                                <path d="M15 3v3h3"></path>
-                                <path d="M9 12h6"></path>
-                                <path d="M9 16h6"></path>
-                            </svg>
-                        </span>
-                        <span>Workbook</span>
-                    </button>
+            <nav class="menu-list" aria-label="Sidebar menu">
+                <button class="menu-btn active" type="button">
+                    <span class="menu-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 10.5 12 3l9 7.5"></path>
+                            <path d="M5 9.5V21h14V9.5"></path>
+                        </svg>
+                    </span>
+                    <span>Induction</span>
+                </button>
 
-                    <button class="menu-btn" type="button">
-                        <span class="menu-icon" aria-hidden="true">
-                            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M21 15a4 4 0 0 1-4 4H8l-5 2 2-5V7a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4z"></path>
-                            </svg>
-                        </span>
-                        <span>Feedback</span>
-                    </button>
-                </nav>
-            </aside>
+                <button class="menu-btn" type="button">
+                    <span class="menu-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M6 3h9l3 3v15H6z"></path>
+                            <path d="M15 3v3h3"></path>
+                            <path d="M9 12h6"></path>
+                            <path d="M9 16h6"></path>
+                        </svg>
+                    </span>
+                    <span>Workbook</span>
+                </button>
 
-            <section class="content glass-panel" aria-label="Main content">
-                <div class="empty-main"></div>
-            </section>
-        </section>
-    </main>
+                <button class="menu-btn" type="button">
+                    <span class="menu-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15a4 4 0 0 1-4 4H8l-5 2 2-5V7a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4z"></path>
+                        </svg>
+                    </span>
+                    <span>Feedback</span>
+                </button>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <section class="empty-panel" aria-label="Main content area"></section>
+        </main>
+    </div>
+
+    <script>
+        const sidebar = document.getElementById('sidebar');
+        const backdrop = document.getElementById('sidebarBackdrop');
+        const menuToggle = document.getElementById('menuToggle');
+        const closeSidebar = document.getElementById('closeSidebar');
+
+        function openSidebar() {
+            sidebar.classList.add('open');
+            backdrop.classList.add('show');
+            sidebar.setAttribute('aria-hidden', 'false');
+            menuToggle.setAttribute('aria-expanded', 'true');
+        }
+
+        function hideSidebar() {
+            sidebar.classList.remove('open');
+            backdrop.classList.remove('show');
+            sidebar.setAttribute('aria-hidden', 'true');
+            menuToggle.setAttribute('aria-expanded', 'false');
+        }
+
+        menuToggle.addEventListener('click', openSidebar);
+        closeSidebar.addEventListener('click', hideSidebar);
+        backdrop.addEventListener('click', hideSidebar);
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') {
+                hideSidebar();
+            }
+        });
+    </script>
 </body>
 </html>
