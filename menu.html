@@ -147,7 +147,6 @@
             text-align: center;
             pointer-events: none;
             user-select: none;
-            animation: fadeInHero 1.1s ease-out both;
         }
 
         .hero-background-text h1 {
@@ -324,17 +323,6 @@
             display: inline-flex;
         }
 
-        @keyframes fadeInHero {
-            from {
-                opacity: 0;
-                transform: translateY(14px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
         @keyframes blinkCaret {
             0%, 49% {
                 opacity: 1;
@@ -505,34 +493,44 @@
             'Let’s Get Started'
         ];
 
-        const typingSpeed = 255;
-        const deletingSpeed = 135;
-        const pauseAfterTyping = 5400;
-        const pauseAfterDeleting = 1350;
+        const initialCursorBlinkDelay = 1800;
+        const typingSpeed = 110;
+        const deletingSpeed = 60;
+        const pauseAfterTyping = 2600;
+        const pauseAfterDeleting = 800;
 
         function sleep(ms) {
             return new Promise((resolve) => setTimeout(resolve, ms));
         }
 
+        async function typeMessage(message) {
+            for (let i = 1; i <= message.length; i += 1) {
+                typingText.textContent = message.slice(0, i);
+                await sleep(typingSpeed);
+            }
+        }
+
+        async function deleteMessage(message) {
+            for (let i = message.length; i >= 0; i -= 1) {
+                typingText.textContent = message.slice(0, i);
+                await sleep(deletingSpeed);
+            }
+        }
+
         async function runTypingAnimation(messages) {
             let messageIndex = 0;
+
+            typingText.textContent = '';
+            await sleep(initialCursorBlinkDelay);
 
             while (true) {
                 const currentMessage = messages[messageIndex];
 
-                for (let i = 1; i <= currentMessage.length; i += 1) {
-                    typingText.textContent = currentMessage.slice(0, i);
-                    await sleep(typingSpeed);
-                }
-
+                await typeMessage(currentMessage);
                 await sleep(pauseAfterTyping);
-
-                for (let i = currentMessage.length; i >= 0; i -= 1) {
-                    typingText.textContent = currentMessage.slice(0, i);
-                    await sleep(deletingSpeed);
-                }
-
+                await deleteMessage(currentMessage);
                 await sleep(pauseAfterDeleting);
+
                 messageIndex = (messageIndex + 1) % messages.length;
             }
         }
