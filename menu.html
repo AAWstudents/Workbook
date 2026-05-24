@@ -171,14 +171,6 @@
             display: inline;
         }
 
-        .typing-caret {
-            display: inline-block;
-            flex: 0 0 auto;
-            width: 1ch;
-            margin-left: 0.02em;
-            animation: blinkCaret 0.8s step-end infinite;
-        }
-
         .sidebar-backdrop {
             position: fixed;
             inset: 0;
@@ -333,15 +325,6 @@
             display: inline-flex;
         }
 
-        @keyframes blinkCaret {
-            0%, 49% {
-                opacity: 1;
-            }
-            50%, 100% {
-                opacity: 0;
-            }
-        }
-
         @media (max-width: 480px) {
             .topbar {
                 top: 16px;
@@ -459,7 +442,7 @@
             <section class="hero-background-text" aria-label="Welcome message">
                 <h1 aria-live="polite">
                     <span class="typing-line">
-                        <span class="typing-text" id="typingText"></span><span class="typing-caret" aria-hidden="true">|</span>
+                        <span class="typing-text" id="typingText"></span>
                     </span>
                 </h1>
             </section>
@@ -502,7 +485,7 @@
         const introMessage = 'Welcome To The Acute Admissions Ward';
         const finalMessage = 'Let’s Get Started';
 
-        const initialCursorBlinkDelay = 2200;
+        const initialDelay = 2200;
         const typingSpeed = 170;
         const deletingSpeed = 100;
         const pauseAfterIntroTyping = 5000;
@@ -529,7 +512,7 @@
         async function runTypingAnimation() {
             typingText.textContent = '';
 
-            await sleep(initialCursorBlinkDelay);
+            await sleep(initialDelay);
             await typeMessage(introMessage, typingSpeed);
             await sleep(pauseAfterIntroTyping);
             await deleteMessage(introMessage, deletingSpeed);
